@@ -1,5 +1,5 @@
 import os.path as osp
-# from beliefmap.mapping.oopenfusion.datasets import ICL, Replica, ScanNet, Kobuki, Live
+# from vlfm.mapping.oopenfusion.datasets import ICL, Replica, ScanNet, Kobuki, Live
 
 BASE_PATH = osp.dirname(osp.dirname(osp.abspath(__file__)))
 
@@ -65,7 +65,7 @@ PARAMS = {
     "depth_min":0.02,
     "voxel_size": 0.25,
     "block_resolution": 1,
-    "block_count": 45000, # will be increased automatically if needed
+    "block_count": 50000, # will be increased automatically if needed
     "img_size": (640,360),
     "input_size": (640,360),
     "device":"cuda:0",

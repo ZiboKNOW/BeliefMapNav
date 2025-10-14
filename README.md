@@ -1,19 +1,43 @@
->📋  A template README.md for code accompanying a Machine Learning paper
+<p align="center">
+  <img src="docs/fist_frame.jpeg" width="700">
+  <h1 align="center">BeliefMapNav: 3D Voxel-Based Belief Map for Zero-Shot Object Navigation</h1>
+  <h3 align="center">
+    Naoki Yokoyama,  Sehoon Ha, Dhruv Batra, Jiuguang Wang,  Bernadette Bucher
+  </h3>
+  <p align="center">
+    <a href="https://arxiv.org/abs/2506.06487">Paper (arXiv)</a>
+  </p>
+</p>
 
-# BeliefMapNav: 3D Voxel-Based Belief Map for Zero-Shot Object Navigation
+## :sparkles: Overview
 
-## Requirements
+Zero-shot object navigation (ZSON) allows robots to find target objects in unfamiliar environments using natural language instructions, without relying on pre-built maps or task-specific training. Recent general-purpose models, such as large language models (LLMs) and vision-language models (VLMs), equip agents with semantic reasoning abilities to estimate target object locations in a zero-shot manner. However, these models often greedily select the next goal without maintaining a global understanding of the environment and are fundamentally limited in the spatial reasoning necessary for effective navigation. To overcome these limitations, we propose a novel 3D voxel-based belief map that estimates the target’s prior presence distribution within a voxelized 3D space. This approach enables agents to integrate semantic priors from LLMs and visual embeddings with hierarchical spatial structure, alongside real-time observations, to build a comprehensive 3Dglobal posterior belief of the target’s location. Building on this 3D voxel map, we introduce BeliefMapNav, an efficient navigation system with two key advantages: i) grounding LLM semantic reasoning within the 3D hierarchical semantics voxel space for precise target position estimation, and ii) integrating sequential path planning to enable efficient global navigation decisions. Experiments on HM3D and HSSD benchmarks show that BeliefMapNav achieves state-of-the-art (SOTA) Success Rate (SR) and Success weighted by Path Length (SPL), with a notable 9.7 SPL improvement over the previous best SR method, validating its effectiveness and efficiency. We will release the code of BeliefMapNav.
 
-To install requirements:
+## Installation
 
-```setup
-conda_env_name=beliefmap
+### Getting Started
+Create the conda environment:
+```bash
+conda_env_name=bmn
 conda create -n $conda_env_name python=3.9 -y
 conda activate $conda_env_name
+pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 -f https://download.pytorch.org/whl/torch_stable.html
 pip install git+https://github.com/IDEA-Research/GroundingDINO.git@eeba084341aaa454ce13cb32fa7fd9282fc73a67 salesforce-lavis==1.0.2
-pip install -r requirements.txt
-pip install -e .[habitat]
-pip install -e .[reality]
+pip install -r environment.txt
+```
+If you are using habitat and are doing simulation experiments, install this repo into your env with the following:
+```bash
+pip install git+https://github.com/facebookresearch/habitat-sim.git@v0.2.5
+git clone https://github.com/facebookresearch/habitat-lab.git
+git checkout v0.2.5
+```
+
+You need to replace the source code of nv_utils.py in habitat-lab with BeliefmapNav/habitat_lab/env_utils.py for resume the eval.
+```bash
+cd habitat-lab
+pip install -e habitat-lab
+pip install -e habitat-baselines
+cd ..
 ```
 #### [Whether you're using conda or not]
 Clone the following repo within this one (simply cloning will suffice):
@@ -28,8 +52,7 @@ First, set the following variables during installation (don't need to put in .ba
 ```bash
 MATTERPORT_TOKEN_ID=<FILL IN FROM YOUR ACCOUNT INFO IN MATTERPORT>
 MATTERPORT_TOKEN_SECRET=<FILL IN FROM YOUR ACCOUNT INFO IN MATTERPORT>
-DATA_DIR=</path/to/BliefmapNav/data>
-
+DATA_DIR=</path/to/vlfm/data>
 HM3D_OBJECTNAV=https://dl.fbaipublicfiles.com/habitat/data/datasets/objectnav/hm3d/v1/objectnav_hm3d_v1.zip
 ```
 
@@ -61,38 +84,30 @@ The weights for MobileSAM, GroundingDINO, and PointNav must be saved to the `dat
 - `yolov7-e6e.pt`: https://github.com/WongKinYiu/yolov7
 - `pointnav_weights.pth`: included inside the [data](data) subdirectory
 
-## Evaluation
-```eval
-conda activate beliefmap
-./scripts/launch_multi_eval.sh
+
+We use finetuned version of semantic segmentation model [RedNet](https://github.com/JindongJiang/RedNet). 
+Therefore, you need to download the [segmentation model](https://drive.google.com/file/d/1U0dS44DIPZ22nTjw0RfO431zV-lMPcvv/view) in data path.
+
+## :arrow_forward: Evaluation within Habitat
+If you want to run the evaluation, you only need to run the following command. The number and IDs of the GPUs, as well as the number of episodes to evaluate on each GPU, can be modified within the file:
+```bash
+.scripts/launch_multi_eval.sh
 ```
-
-## Results
-
-Our model achieves the following performance on :
-
-| Method                            | Unsupervised | Zero-shot | HM3D SR↑ | HM3D SPL↑ | MP3D SR↑ | MP3D SPL↑ | HSSD SR↑ | HSSD SPL↑ |
-|----------------------------------|--------------|-----------|----------|-----------|----------|-----------|----------|-----------|
-| Habitat-Web [ramrakhya2022habitat]      | ❌           | ❌        | 41.5     | 16.0      | 31.6     | 8.5       | -        | -         |
-| OVRL [yadav2023offline]                    | ❌           | ❌        | -        | -         | 28.6     | 7.4       | -        | -         |
-| ProcTHOR [deitke2022️]                     | ❌           | ❌        | 54.4     | 31.8      | -        | -         | -        | -         |
-| SGM [zhang2024imagine]                     | ❌           | ❌        | 60.2     | 30.8      | 37.7     | 14.7      | -        | -         |
-| **---**                              |              |           |          |           |          |           |          |           |
-| ZSON [majumdar2022zson]                    | ❌           | ✔         | 25.5     | 12.6      | 15.3     | 4.8       | -        | -         |
-| PSL [sun2024prioritized]                    | ❌           | ✔         | 42.4     | 19.2      | 18.9     | 6.4       | -        | -         |
-| PixNav [cai2024bridging]                    | ❌           | ✔         | 37.9     | 20.5      | -        | -         | -        | -         |
-| **---**                              |              |           |          |           |          |           |          |           |
-| VLFM [yokoyama2024vlfm]                     | ✔            | ✔         | 52.5     | 30.4      | 36.4     | 17.5      | -        | -         |
-| ESC [zhou2023esc]                       | ✔            | ✔         | 39.2     | 22.3      | 28.7     | 14.2      | 38.1     | 22.2      |
-| Cows [gadre2023cows]                       | ✔            | ✔         | -        | -         | 9.2      | 4.9       |          |           |
-| L3MVN [yu2023l3mvn]{}                     | ✔            | ✔         | 50.4     | 23.1      | 34.9     | 14.5      | 41.2     | 22.5      |
-| ImagineNav [zhao2024imaginenav]{}          | ✔            | ✔         | 53.0     | 23.8      | -        | -         | 51.0     | 24.9      |
-| VoroNav [wu2024voronav]                     | ✔            | ✔         | 42.0     | 26.0      | -        | -         | 41.0     | 23.2      |
-| GAMap [huang2024gamap]                     | ✔            | ✔         | 53.1     | 26.0      | -        | -         | -        | -         |
-| OpenFMNav [kuang2024openfmnav]              | ✔            | ✔         | 52.5     | 24.1      | 37.2     | 15.7      | -        | -         |
-| InstructNav [long2024instructnav]            | ✔            | ✔         | 58.0     | 20.9      | -        | -         | -        | -         |
-| **BeliefMapNav**                    | ✔            | ✔         | **61.4** | **30.6**  | **37.3** | **17.6**  | **65.2** | **32.1**  |
+(You may need to run `chmod +x` on this file first.)
 
 ## :newspaper: License
 
-BliefmapNav is released under the [MIT License](LICENSE).
+VLFM is released under the [MIT License](LICENSE). This code was produced as part of Naoki Yokoyama's internship at the Boston Dynamics AI Institute in Summer 2023 and is provided "as is" without active maintenance. For questions, please contact [Naoki Yokoyama](http://naoki.io) or [Jiuguang Wang](https://www.robo.guru).
+
+## :black_nib: Citation
+
+If you use VLFM in your research, please use the following BibTeX entry.
+
+```
+@article{zhou2025beliefmapnav,
+  title={BeliefMapNav: 3D Voxel-Based Belief Map for Zero-Shot Object Navigation},
+  author={Zhou, Zibo and Hu, Yue and Zhang, Lingkai and Li, Zonglin and Chen, Siheng},
+  journal={arXiv preprint arXiv:2506.06487},
+  year={2025}
+}
+```

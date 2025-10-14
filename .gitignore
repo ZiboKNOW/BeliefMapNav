@@ -192,6 +192,6 @@ yolov7/
 outputs/
 tb/
 lockfiles/
-beliefmap/mapping/openfusion/zoo/xdecoder_seem/
-beliefmap/mapping/openfusion/zoo/
+vlfm/mapping/openfusion/zoo/xdecoder_seem/
+vlfm/mapping/openfusion/zoo/
 traced_model.pt

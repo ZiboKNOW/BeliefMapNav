@@ -34,6 +34,6 @@ RUN pip install torch>=1.10.1 \
 RUN pip install git+https://github.com/naokiyokoyama/frontier_exploration.git \
                 git+https://github.com/ChaoningZhang/MobileSAM.git \
                 git+https://github.com/naokiyokoyama/depth_camera_filtering \
-                git+https://github.com/facebookresearch/habitat-sim.git@v0.2.4 \
+                git+https://github.com/facebookresearch/habitat-sim.git@v0.2.5 \
                 git+https://github.com/naokiyokoyama/bd_spot_wrapper.git \
                 git+https://github.com/IDEA-Research/GroundingDINO.git

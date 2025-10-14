@@ -18,7 +18,7 @@ def process_failure_log(file_path):
     return failure_array, dict(failure_count)
 
 
-failure_array, failure_stats = process_failure_log("/home/ubuntu/DATA2/zzb/openspcae/outputs/final_results/merge.txt")
+failure_array, failure_stats = process_failure_log("path to your final_result.txt")
 failure_array = (failure_array - 1)/3
 
 print("Failure line indices:", failure_array.shape)

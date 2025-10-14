@@ -99,10 +99,6 @@ If you want to run the evaluation, you only need to run the following command. T
 
 This repo is heavily based on [VLFM](https://github.com/bdaiinstitute/vlfm), and referenced the code in [Stairway to Success](https://github.com/Zeying-Gong/ascent) in for the robot's stair-climbing/ascending and descending capabilities. We thank the authors for their great work.
 
-## :newspaper: License
-
-VLFM is released under the [MIT License](LICENSE). This code was produced as part of Naoki Yokoyama's internship at the Boston Dynamics AI Institute in Summer 2023 and is provided "as is" without active maintenance. For questions, please contact [Naoki Yokoyama](http://naoki.io) or [Jiuguang Wang](https://www.robo.guru).
-
 ## :black_nib: Citation
 
 If you use VLFM in your research, please use the following BibTeX entry.

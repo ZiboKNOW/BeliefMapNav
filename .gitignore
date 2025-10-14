@@ -187,11 +187,3 @@ GroundingDINO/
 __pycache__/
 *.pyc
 data/
-images/
-yolov7/
-outputs/
-tb/
-lockfiles/
-vlfm/mapping/openfusion/zoo/xdecoder_seem/
-vlfm/mapping/openfusion/zoo/
-traced_model.pt

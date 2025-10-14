@@ -2,7 +2,7 @@
   <img src="docs/fist_frame.jpeg" width="700">
   <h1 align="center">BeliefMapNav: 3D Voxel-Based Belief Map for Zero-Shot Object Navigation</h1>
   <h3 align="center">
-    Naoki Yokoyama,  Sehoon Ha, Dhruv Batra, Jiuguang Wang,  Bernadette Bucher
+    Zibo Zhou, Yue Hu, Lingkai Zhang, Zonglin Li, Siheng Chen
   </h3>
   <p align="center">
     <a href="https://arxiv.org/abs/2506.06487">Paper (arXiv)</a>

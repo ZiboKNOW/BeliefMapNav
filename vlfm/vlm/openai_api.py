@@ -5,8 +5,8 @@ import cv2
 
 class OpenAI_API:
     def __init__(self):
-        self.api_key = "sk-v7I66FctEyK0MD79V874Mt3QWd1qWv6aPVglcGJbbN29WNjZ"
-        self.base_url = "http://152.53.53.64:3000/v1"
+        self.api_key = "your api"
+        self.base_url = "you url"
         self.gpt_client = OpenAI(api_key=self.api_key, base_url = self.base_url)
         # self.gpt_client = OpenAI(api_key=self.api_key)
     

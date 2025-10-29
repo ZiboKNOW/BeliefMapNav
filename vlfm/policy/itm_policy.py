@@ -72,7 +72,7 @@ class BaseITMPolicy(BaseObjectNavPolicy):
             use_max_confidence=use_max_confidence,
             obstacle_map=self._obstacle_map if sync_explored_areas else None,
         )
-        self.gpt_client = OpenAI(api_key="sk-9hUqlLcdASnI1QxmGSKaqj9wdSVod2vDtmljB7hjO4ZuqgFB",base_url = "http://47.254.87.71:3000/v1")
+        self.gpt_client = OpenAI(api_key="your key",base_url = "your url")
         self.RoomProcessor = PointLabelRegionProcessor()
         self._acyclic_enforcer = AcyclicEnforcer()
         self.result_path = os.environ.get("result_path")
